@@ -1,0 +1,70 @@
+name: Generate Beat List and Deploy to Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate beat list
+        run: |
+          node -e "
+            const fs = require('fs');
+            const path = require('path');
+
+            function getFiles(dir) {
+              if (!fs.existsSync(dir)) return [];
+              return fs.readdirSync(dir).filter(file => file.endsWith('.mp3'));
+            }
+
+            const allBeats = getFiles('beats').map(file => ({
+              songName: path.parse(file).name,
+              filePath: 'beats/' + file,
+              buyLink: '#'
+            }));
+
+            const featuredBeats = getFiles('beats/featured').map(file => ({
+              songName: path.parse(file).name,
+              filePath: 'beats/featured/' + file
+            }));
+
+            const beatList = { allBeats, featuredBeats };
+
+            fs.writeFileSync('beat-list.json', JSON.stringify(beatList, null, 2));
+            console.log('beat-list.json generated successfully.');
+          "
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
