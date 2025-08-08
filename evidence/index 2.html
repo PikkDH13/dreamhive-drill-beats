@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Beat Store</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* --- Main Styles (Condensed) --- */
+        body{margin:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background-color:#121212;color:#e0e0e0}.background-container{width:90%;max-width:1200px;margin:30px auto;background-color:#1e1e1e;background-image:url('');background-size:cover;background-position:center;border-radius:15px;box-shadow:0 0 20px rgba(0,0,0,.5);padding:20px 40px}.header{display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;border-bottom:1px solid #333}.header h1{color:#e53935;margin:0}.login-signup-area a{color:#e0e0e0;text-decoration:none;margin-left:15px;padding:8px 15px;border:1px solid #e53935;border-radius:5px;cursor:pointer;transition:background-color .3s,color .3s}.login-signup-area a:hover{background-color:#e53935;color:#fff}#user-status{display:none;align-items:center;gap:15px}#user-status span{font-weight:700}h2{color:#e53935;border-bottom:2px solid #e53935;padding-bottom:10px;margin-top:30px}.featured-beats-list{display:flex;gap:20px;overflow-x:auto;padding:15px;min-height:150px}.featured-beat-item{flex-shrink:0;width:220px;background-color:#2c2c2c;padding:15px;border-radius:10px;text-align:center}.featured-beat-item .song-name{font-weight:700;font-size:1.1em;margin-bottom:10px;display:block}.beat-list{display:flex;flex-direction:column;gap:15px;min-height:100px}.beat-item{display:flex;align-items:center;background-color:#2c2c2c;padding:15px;border-radius:10px;transition:background-color .3s}.beat-item:hover{background-color:#383838}.beat-item .song-name{flex-grow:1;font-size:1.2em;font-weight:700}.beat-item .button,.featured-beat-item .button{background:0 0;border:none;color:#e0e0e0;cursor:pointer;font-size:24px;margin:0 10px;padding:5px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:color .3s}.beat-item .button:hover,.featured-beat-item .button:hover{color:#e53935}.buy-button{background-color:#e53935;color:#fff;padding:8px 20px;border-radius:5px;text-decoration:none;font-weight:700;font-size:16px;margin-left:15px;transition:background-color .3s}.buy-button:hover{background-color:#c42724}.like-container{display:flex;align-items:center;gap:5px;min-width:60px}
+        
+        /* --- New Auth Modal Styles --- */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: #2c2c2c; padding: 30px; border-radius: 10px; width: 90%; max-width: 400px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); position: relative; }
+        .modal-close { position: absolute; top: 10px; right: 15px; font-size: 28px; font-weight: bold; color: #fff; cursor: pointer; }
+        .modal-content h3 { color: #e53935; text-align: center; margin-top: 0; }
+        .auth-form { display: flex; flex-direction: column; gap: 15px; }
+        .auth-form input { background: #1e1e1e; border: 1px solid #555; border-radius: 5px; padding: 12px; color: #fff; font-size: 16px; }
+        .auth-form input:focus { outline: none; border-color: #e53935; }
+        .form-buttons { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
+        .form-buttons button { flex: 1; padding: 12px; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background-color 0.3s; }
+        #signup-action-btn { background-color: #e53935; color: #fff; }
+        #signup-action-btn:hover { background-color: #c42724; }
+        #login-action-btn { background-color: #555; color: #fff; }
+        #login-action-btn:hover { background-color: #777; }
+        #auth-error { color: #ff8a80; text-align: center; margin-top: 15px; display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="background-container">
+        <header class="header">
+            <h1>YOUR LOGO/NAME</h1>
+            <div class="login-signup-area">
+                <!-- This area will be dynamically controlled by JavaScript -->
+                <div id="logged-out-view">
+                    <a id="login-btn">Log In</a>
+                    <a id="signup-btn">Sign Up</a>
+                </div>
+                <div id="user-status">
+                    <span id="user-email"></span>
+                    <a id="logout-btn">Log Out</a>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="featured-beats">
+                <h2>Featured Beats</h2>
+                <div class="featured-beats-list" id="featured-beats-list"></div>
+            </section>
+            <section class="all-beats">
+                <h2>All Beats</h2>
+                <div class="beat-list" id="all-beats-list"></div>
+            </section>
+        </main>
+    </div>
+    
+    <!-- Auth Modal -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal-content">
+            <span class="modal-close" id="modal-close-btn">&times;</span>
+            <h3 id="modal-title">Welcome</h3>
+            <form class="auth-form" id="auth-form">
+                <input type="email" id="auth-email" placeholder="Email" required>
+                <input type="password" id="auth-password" placeholder="Password (min. 6 characters)" required>
+                <div class="form-buttons">
+                    <button type="button" id="login-action-btn">Log In</button>
+                    <button type="button" id="signup-action-btn">Sign Up</button>
+                </div>
+                <p id="auth-error"></p>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        // --- FIREBASE INITIALIZATION (Your key is safe here) ---
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+        import { 
+            getAuth, 
+            onAuthStateChanged,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+        // Your web app's Firebase configuration - You did this part perfectly!
+        const firebaseConfig = {
+            apiKey: "AIzaSyCkXeTXEZ-VpAAKr5aMY3iTuZCW330aMUQ",
+            authDomain: "dream-hive-uk-drill-beats.firebaseapp.com",
+            projectId: "dream-hive-uk-drill-beats",
+            storageBucket: "dream-hive-uk-drill-beats.appspot.com", // Corrected domain
+            messagingSenderId: "817848550593",
+            appId: "1:817848550593:web:7dbadc392729127c8d4040",
+            measurementId: "G-HPKZYPMX3G"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app); // Get the Auth service
+
+        // --- AUTHENTICATION LOGIC ---
+        const modal = document.getElementById('auth-modal');
+        const loggedOutView = document.getElementById('logged-out-view');
+        const userStatusView = document.getElementById('user-status');
+        const userEmailSpan = document.getElementById('user-email');
+        const authError = document.getElementById('auth-error');
+
+        // Listen for user login/logout state changes
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                // User is signed in
+                console.log("User logged in:", user.email);
+                userEmailSpan.textContent = user.email;
+                userStatusView.style.display = 'flex';
+                loggedOutView.style.display = 'none';
+                modal.style.display = 'none'; // Close modal on successful login
+            } else {
+                // User is signed out
+                console.log("User logged out");
+                userStatusView.style.display = 'none';
+                loggedOutView.style.display = 'flex';
+            }
+        });
+
+        // Event Listeners for buttons
+        document.getElementById('login-btn').addEventListener('click', () => modal.style.display = 'flex');
+        document.getElementById('signup-btn').addEventListener('click', () => modal.style.display = 'flex');
+        document.getElementById('modal-close-btn').addEventListener('click', () => modal.style.display = 'none');
+        document.getElementById('logout-btn').addEventListener('click', () => signOut(auth));
+        
+        // Handle form actions
+        const emailInput = document.getElementById('auth-email');
+        const passwordInput = document.getElementById('auth-password');
+
+        document.getElementById('signup-action-btn').addEventListener('click', async () => {
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
+                console.log("Signed up:", userCredential.user);
+                authError.style.display = 'none';
+            } catch (error) {
+                authError.textContent = error.message;
+                authError.style.display = 'block';
+            }
+        });
+
+        document.getElementById('login-action-btn').addEventListener('click', async () => {
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
+                console.log("Logged in:", userCredential.user);
+                authError.style.display = 'none';
+            } catch (error) {
+                authError.textContent = error.message;
+                authError.style.display = 'block';
+            }
+        });
+
+        // --- DYNAMIC BEAT LOADING LOGIC (Unchanged) ---
+        let currentAudio = null, currentPlayButton = null;
+        function playPreview(b,f){const i=b.querySelector('.material-icons');if(currentAudio){const c=currentPlayButton.querySelector('.material-icons');if(currentPlayButton===b){currentAudio.paused?(currentAudio.play(),i.textContent='pause_circle'):(currentAudio.pause(),i.textContent='play_circle');return}currentAudio.pause();c.textContent='play_circle'}currentAudio=new Audio(f);currentAudio.play();i.textContent='pause_circle';currentPlayButton=b;currentAudio.addEventListener('ended',()=>{i.textContent='play_circle';currentAudio=null;currentPlayButton=null});currentAudio.addEventListener('error',()=>{alert(`Error: Could not find beat file.\nPath: ${f}`);i.textContent='play_circle'})}
+        function likeBeat(l){l.textContent=parseInt(l.textContent)+1}
+        function createBeatItemHTML(b){return`<div class="beat-item"><span class="song-name">${b.songName}</span><button class="button"onclick="playPreview(this,'${b.filePath}')"><i class="material-icons">play_circle</i></button><div class="like-container"><button class="button"onclick="likeBeat(this.nextElementSibling)"><i class="material-icons">favorite</i></button><span class="like-count">0</span></div><button class="button"><i class="material-icons">share</i></button><a href="${b.buyLink||'#'}"target="_blank"class="buy-button">BUY LEASE</a></div>`}
+        function createFeaturedBeatHTML(b){return`<div class="featured-beat-item"><span class="song-name">${b.songName}</span><button class="button"onclick="playPreview(this,'${b.filePath}')"><i class="material-icons"style="font-size:48px">play_circle</i></button></div>`}
+        async function loadAndRenderBeats(){try{const r=await fetch('beat-list.json?cachebust='+new Date().getTime());if(!r.ok)throw new Error(`HTTP error! status: ${r.status}`);const d=await r.json();document.getElementById('featured-beats-list').innerHTML=d.featuredBeats.slice().reverse().map(createFeaturedBeatHTML).join('');document.getElementById('all-beats-list').innerHTML=d.allBeats.slice().reverse().map(createBeatItemHTML).join('')}catch(e){console.error("Could not load beat list:",e);document.getElementById('all-beats-list').innerHTML="<p>Could not load beats. Wait a minute and refresh.</p>"}}
+        document.addEventListener('DOMContentLoaded',loadAndRenderBeats);
+    </script>
+</body>
+</html>

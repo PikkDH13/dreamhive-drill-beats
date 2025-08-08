@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Beat Store</title>
+
+    <!-- Google Fonts for Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        /* --- GENERAL STYLES & THEME --- */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212; /* Very dark grey background */
+            color: #e0e0e0; /* Light grey text for readability */
+        }
+
+        /* --- BACKGROUND IMAGE CONTAINER --- */
+        /* To change the background image, update the URL in the line below. */
+        /* Example: background-image: url('images/my-background.jpg'); */
+        .background-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto; /* Centers the container */
+            background-color: #1e1e1e; /* Fallback color if image fails */
+            background-image: url(''); /* <-- PUT YOUR BACKGROUND IMAGE URL HERE */
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px; /* Rounded edges */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            padding: 20px 40px;
+        }
+
+        /* --- HEADER & LOGIN --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #333;
+        }
+
+        .header h1 {
+            color: #e53935; /* Red color for your title */
+            margin: 0;
+        }
+
+        .login-signup a {
+            color: #e0e0e0;
+            text-decoration: none;
+            margin-left: 15px;
+            padding: 8px 15px;
+            border: 1px solid #e53935;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .login-signup a:hover {
+            background-color: #e53935;
+            color: #fff;
+        }
+        
+        /* --- SECTION HEADERS --- */
+        h2 {
+            color: #e53935;
+            border-bottom: 2px solid #e53935;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+
+        /* --- FEATURED BEATS (HORIZONTAL LIST) --- */
+        .featured-beats-list {
+            display: flex;
+            gap: 20px; /* Space between featured beats */
+            overflow-x: auto; /* Allows horizontal scrolling if needed */
+            padding-bottom: 15px;
+        }
+        
+        .featured-beat-item {
+            flex: 1;
+            min-width: 200px; /* Minimum width for each item */
+            background-color: #2c2c2c;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .featured-beat-item .song-name {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        /* --- MAIN BEAT LIST (VERTICAL) --- */
+        .beat-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Space between each beat row */
+        }
+
+        .beat-item {
+            display: flex;
+            align-items: center;
+            background-color: #2c2c2c;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+        }
+        
+        .beat-item:hover {
+            background-color: #383838;
+        }
+
+        .beat-item .song-name {
+            flex-grow: 1; /* Takes up most of the space */
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        /* --- BUTTONS & ICONS --- */
+        .beat-item .button, .featured-beat-item .button {
+            background: none;
+            border: none;
+            color: #e0e0e0;
+            cursor: pointer;
+            font-size: 24px; /* Icon size */
+            margin: 0 10px;
+            padding: 5px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s, background-color 0.3s;
+        }
+
+        .beat-item .button:hover, .featured-beat-item .button:hover {
+            color: #e53935;
+        }
+
+        .buy-button {
+            background-color: #e53935;
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            margin-left: 15px;
+            transition: background-color 0.3s;
+        }
+
+        .buy-button:hover {
+            background-color: #c42724;
+        }
+        
+        .like-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            min-width: 60px; /* Prevents layout shift when number changes */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="background-container">
+        
+        <header class="header">
+            <h1>YOUR LOGO/NAME</h1>
+            <div class="login-signup">
+                <!-- NOTE: Login/Signup requires a backend to be functional. These are placeholders. -->
+                <a href="#" id="login-btn">Log In</a>
+                <a href="#" id="signup-btn">Sign Up</a>
+            </div>
+        </header>
+
+        <main>
+            <section class="featured-beats">
+                <h2>Featured Beats</h2>
+                <!-- The JavaScript will automatically create the featured beats here -->
+                <div class="featured-beats-list" id="featured-beats-list"></div>
+            </section>
+
+            <section class="all-beats">
+                <h2>All Beats</h2>
+                <!-- The JavaScript will automatically create the list of all beats here -->
+                <div class="beat-list" id="all-beats-list"></div>
+            </section>
+        </main>
+
+    </div>
+
+    <script>
+        // --- JAVASCRIPT SECTION ---
+        // You only need to edit the 'featuredBeats' and 'allBeats' lists below.
+        
+        // ===================================================================================
+        // === EDIT HERE: Add your FEATURED beats to this list ===============================
+        // ===================================================================================
+        // Add up to 5 beats here.
+        // FORMAT: { songName: "Name of Your Beat", filePath: "beats/your-beat-file.mp3" }
+        // The 'filePath' is the path to your audio file in your project folder.
+        const featuredBeats = [
+            { songName: "Vengeance", filePath: "beats/featured/vengeance.mp3" },
+            { songName: "Night Shift", filePath: "beats/featured/night-shift.mp3" },
+            { songName: "City Lights", filePath: "beats/featured/city-lights.mp3" },
+        ];
+
+
+        // ===================================================================================
+        // === EDIT HERE: Add ALL your beats to this list ====================================
+        // ===================================================================================
+        // Add new beats to the END of this list. They will automatically appear at the TOP of the website.
+        // FORMAT: { songName: "Name of Your Beat", filePath: "beats/your-beat-file.mp3", buyLink: "your-payment-link-here" }
+        const allBeats = [
+            { songName: "Drillogy", filePath: "beats/drillogy.mp3", buyLink: "#" },
+            { songName: "Underground King", filePath: "beats/underground-king.mp3", buyLink: "#" },
+            { songName: "Shadows", filePath: "beats/shadows.mp3", buyLink: "#" },
+            { songName: "The Come Up", filePath: "beats/the-come-up.mp3", buyLink: "#" },
+            { songName: "Final Boss", filePath: "beats/final-boss.mp3", buyLink: "#" },
+        ];
+
+        // --- NO NEED TO EDIT BELOW THIS LINE ---
+
+        // Audio player logic
+        let currentAudio = null;
+        let currentPlayButton = null;
+
+        function playPreview(button, filePath) {
+            if (currentAudio) {
+                // If the same button is clicked, toggle play/pause
+                if (currentPlayButton === button) {
+                    if (currentAudio.paused) {
+                        currentAudio.play();
+                        button.innerHTML = 'pause_circle'; // Change to pause icon
+                    } else {
+                        currentAudio.pause();
+                        button.innerHTML = 'play_circle'; // Change to play icon
+                    }
+                    return;
+                }
+                
+                // If a different beat is played, stop the current one
+                currentAudio.pause();
+                currentPlayButton.innerHTML = 'play_circle';
+            }
+
+            // Create and play new audio
+            currentAudio = new Audio(filePath);
+            currentAudio.play();
+            button.innerHTML = 'pause_circle';
+            currentPlayButton = button;
+            
+            // When audio finishes, reset the icon
+            currentAudio.addEventListener('ended', () => {
+                button.innerHTML = 'play_circle';
+                currentAudio = null;
+                currentPlayButton = null;
+            });
+        }
+
+        // Like button logic (visual only, does not save)
+        function likeBeat(likeCountElement) {
+            let currentLikes = parseInt(likeCountElement.textContent);
+            likeCountElement.textContent = currentLikes + 1;
+        }
+
+        // Function to generate HTML for a single beat item in the main list
+        function createBeatItemHTML(beat) {
+            return `
+                <div class="beat-item">
+                    <span class="song-name">${beat.songName}</span>
+                    
+                    <button class="button preview-button" onclick="playPreview(this, '${beat.filePath}')">
+                        <i class="material-icons">play_circle</i>
+                    </button>
+                    
+                    <div class="like-container">
+                        <button class="button like-button" onclick="likeBeat(this.nextElementSibling)">
+                            <i class="material-icons">favorite</i>
+                        </button>
+                        <span class="like-count">0</span>
+                    </div>
+
+                    <button class="button share-button">
+                        <i class="material-icons">share</i>
+                    </button>
+                    
+                    <a href="${beat.buyLink}" target="_blank" class="buy-button">BUY LEASE</a>
+                </div>
+            `;
+        }
+        
+        // Function to generate HTML for a featured beat
+        function createFeaturedBeatHTML(beat) {
+            return `
+                <div class="featured-beat-item">
+                     <p class="song-name">${beat.songName}</p>
+                     <button class="button preview-button" onclick="playPreview(this, '${beat.filePath}')">
+                        <i class="material-icons" style="font-size: 48px;">play_circle</i>
+                    </button>
+                </div>
+            `;
+        }
+
+        // Function to render all the beats to the page
+        function renderBeats() {
+            const featuredListContainer = document.getElementById('featured-beats-list');
+            featuredListContainer.innerHTML = featuredBeats.map(createFeaturedBeatHTML).join('');
+
+            const allListContainer = document.getElementById('all-beats-list');
+            // Reverse the array to show newest first, then generate HTML
+            allListContainer.innerHTML = allBeats.slice().reverse().map(createBeatItemHTML).join('');
+        }
+
+        // Run the render function when the page loads
+        document.addEventListener('DOMContentLoaded', renderBeats);
+
+    </script>
+
+</body>
+</html>
