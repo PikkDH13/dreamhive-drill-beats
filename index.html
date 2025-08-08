@@ -6,50 +6,21 @@
     <title>UK Drill Beats</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        /* --- Main Styles (Condensed) --- */
-        body{margin:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background-color:#121212;color:#e0e0e0}.background-container{width:90%;max-width:1200px;margin:30px auto;background-color:#1e1e1e;background-image:url('images/background.jpg');background-size:cover;background-position:center;border-radius:15px;box-shadow:0 0 20px rgba(0,0,0,.5);padding:20px 40px}.header{display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;border-bottom:1px solid #333}
-        
-        /* --- CHANGE: Updated Logo Name Style --- */
-        .header h1{color:#e53935;margin:0;font-size:1.8em;text-transform:uppercase;letter-spacing:1px;}
-        
-        /* --- CHANGE: Updated Button Styles w/ Shadows --- */
-        .login-signup-area a{color:#e0e0e0;text-decoration:none;margin-left:15px;padding:8px 15px;border:1px solid #e53935;border-radius:5px;cursor:pointer;transition:all .3s ease;box-shadow: 0 2px 4px rgba(0,0,0,0.3);}
-        .login-signup-area a:hover{background-color:#e53935;color:#fff;box-shadow: 0 4px 8px rgba(0,0,0,0.5);}
-
-        #user-status{display:none;align-items:center;gap:15px}#user-status span{font-weight:700}h2{color:#e53935;border-bottom:2px solid #e53935;padding-bottom:10px;margin-top:30px}.featured-beats-list{display:flex;gap:20px;overflow-x:auto;padding:15px;min-height:150px}.featured-beat-item{flex-shrink:0;width:220px;background-color:#2c2c2c;padding:15px;border-radius:10px;text-align:center}.featured-beat-item .song-name{font-weight:700;font-size:1.1em;margin-bottom:10px;display:block}.beat-list{display:flex;flex-direction:column;gap:15px;min-height:100px}.beat-item{display:flex;align-items:center;background-color:#2c2c2c;padding:15px;border-radius:10px;transition:background-color .3s}.beat-item:hover{background-color:#383838}.beat-item .song-name{flex-grow:1;font-size:1.2em;font-weight:700}.beat-item .button,.featured-beat-item .button{background:0 0;border:none;color:#e0e0e0;cursor:pointer;font-size:24px;margin:0 10px;padding:5px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:color .3s}.beat-item .button:hover,.featured-beat-item .button:hover{color:#e53935}
-        
-        /* --- CHANGE: Updated Button Style w/ Shadow --- */
-        .buy-button{background-color:#e53935;color:#fff;padding:8px 20px;border-radius:5px;text-decoration:none;font-weight:700;font-size:16px;margin-left:15px;transition:all .3s ease;box-shadow: 0 2px 4px rgba(0,0,0,0.3);}
-        .buy-button:hover{background-color:#c42724;transform:translateY(-2px);box-shadow: 0 4px 8px rgba(0,0,0,0.5);}
-
-        .like-container{display:flex;align-items:center;gap:5px;min-width:60px}
-        .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);justify-content:center;align-items:center;z-index:1000}.modal-content{background:#2c2c2c;padding:30px;border-radius:10px;width:90%;max-width:400px;box-shadow:0 5px 15px rgba(0,0,0,.5);position:relative}.modal-close{position:absolute;top:10px;right:15px;font-size:28px;font-weight:700;color:#fff;cursor:pointer}.modal-content h3{color:#e53935;text-align:center;margin-top:0}.auth-form{display:flex;flex-direction:column;gap:15px}.auth-form input{background:#1e1e1e;border:1px solid #555;border-radius:5px;padding:12px;color:#fff;font-size:16px}.auth-form input:focus{outline:0;border-color:#e53935}.form-buttons{display:flex;gap:10px;justify-content:center;margin-top:10px}
-        
-        /* --- CHANGE: Updated Button Styles w/ Shadows --- */
-        .form-buttons button{flex:1;padding:12px;border:none;border-radius:5px;font-size:16px;font-weight:700;cursor:pointer;transition:all .3s ease;box-shadow: 0 2px 4px rgba(0,0,0,0.3);}
-        .form-buttons button:hover{transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.5);}
-        
-        #signup-action-btn{background-color:#e53935;color:#fff}#signup-action-btn:hover{background-color:#c42724}#login-action-btn{background-color:#555;color:#fff}#login-action-btn:hover{background-color:#777}#auth-error{color:#ff8a80;text-align:center;margin-top:15px;font-weight:700;display:none}
+        /* --- Styles (Condensed for brevity) --- */
+        body{margin:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background-color:#121212;color:#e0e0e0}.background-container{width:90%;max-width:1200px;margin:30px auto;background-color:#1e1e1e;background-image:url(images/background.jpg);background-size:cover;background-position:center;border-radius:15px;box-shadow:0 0 20px rgba(0,0,0,.5);padding:20px 40px}.header{display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;border-bottom:1px solid #333}.header h1{color:#e53935;margin:0;font-size:1.8em;text-transform:uppercase;letter-spacing:1px}.login-signup-area a{color:#e0e0e0;text-decoration:none;margin-left:15px;padding:8px 15px;border:1px solid #e53935;border-radius:5px;cursor:pointer;transition:all .3s ease;box-shadow:0 2px 4px rgba(0,0,0,.3)}.login-signup-area a:hover{background-color:#e53935;color:#fff;box-shadow:0 4px 8px rgba(0,0,0,.5)}#user-status{display:none;align-items:center;gap:15px}#user-status span{font-weight:700}h2{color:#e53935;border-bottom:2px solid #e53935;padding-bottom:10px;margin-top:30px}.featured-beats-list,.beat-list{min-height:100px}.featured-beats-list{display:flex;gap:20px;overflow-x:auto;padding:15px}.featured-beat-item{flex-shrink:0;width:220px;background-color:#2c2c2c;padding:15px;border-radius:10px;text-align:center}.featured-beat-item .song-name{font-weight:700;font-size:1.1em;margin-bottom:10px;display:block}.beat-list{display:flex;flex-direction:column;gap:15px}.beat-item{display:grid;grid-template-columns:1fr auto auto auto auto;align-items:center;background-color:#2c2c2c;padding:15px;border-radius:10px;transition:background-color .3s}.beat-item:hover{background-color:#383838}.beat-item .song-name{font-size:1.2em;font-weight:700;text-align:left}.beat-item .button,.featured-beat-item .button{background:0 0;border:none;color:#e0e0e0;cursor:pointer;font-size:24px;margin:0 5px;padding:5px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:color .3s}.beat-item .button:hover,.featured-beat-item .button:hover{color:#e53935}.buy-button{background-color:#e53935;color:#fff;padding:8px 20px;border-radius:5px;text-decoration:none;font-weight:700;font-size:16px;margin-left:10px;transition:all .3s ease;box-shadow:0 2px 4px rgba(0,0,0,.3)}.buy-button:hover{background-color:#c42724;transform:translateY(-2px);box-shadow:0 4px 8px rgba(0,0,0,.5)}.like-container{display:flex;align-items:center;gap:5px;min-width:60px}
+        .like-button.liked .material-icons{color:#e53935; /* Red heart when liked */}
+        .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);justify-content:center;align-items:center;z-index:1000}.modal-content{background:#2c2c2c;padding:30px;border-radius:10px;width:90%;max-width:400px;box-shadow:0 5px 15px rgba(0,0,0,.5);position:relative}.modal-close{position:absolute;top:10px;right:15px;font-size:28px;font-weight:700;color:#fff;cursor:pointer}.modal-content h3{color:#e53935;text-align:center;margin-top:0}.auth-form{display:flex;flex-direction:column;gap:15px}.auth-form input{background:#1e1e1e;border:1px solid #555;border-radius:5px;padding:12px;color:#fff;font-size:16px}.auth-form input:focus{outline:0;border-color:#e53935}.form-buttons{display:flex;gap:10px;justify-content:center;margin-top:10px}.form-buttons button{flex:1;padding:12px;border:none;border-radius:5px;font-size:16px;font-weight:700;cursor:pointer;transition:all .3s ease;box-shadow:0 2px 4px rgba(0,0,0,.3)}.form-buttons button:hover{transform:translateY(-2px);box-shadow:0 4px 8px rgba(0,0,0,.5)}#signup-action-btn{background-color:#e53935;color:#fff}#signup-action-btn:hover{background-color:#c42724}#login-action-btn{background-color:#555;color:#fff}#login-action-btn:hover{background-color:#777}#auth-error{color:#ff8a80;text-align:center;margin-top:15px;font-weight:700;display:none}
     </style>
 </head>
 <body>
-
     <div class="background-container">
         <header class="header">
-            <!-- CHANGE: Updated the logo text -->
             <h1>UK Drill Beats</h1>
             <div class="login-signup-area">
-                <div id="logged-out-view">
-                    <a id="login-btn">Log In</a>
-                    <a id="signup-btn">Sign Up</a>
-                </div>
-                <div id="user-status">
-                    <span id="user-email"></span>
-                    <a id="logout-btn">Log Out</a>
-                </div>
+                <div id="logged-out-view"><a id="login-btn">Log In</a><a id="signup-btn">Sign Up</a></div>
+                <div id="user-status"><span id="user-email"></span><a id="logout-btn">Log Out</a></div>
             </div>
         </header>
-
         <main>
             <section class="featured-beats">
                 <h2>Featured Beats</h2>
@@ -61,27 +32,25 @@
             </section>
         </main>
     </div>
-    
     <div class="modal-overlay" id="auth-modal">
         <div class="modal-content">
             <span class="modal-close" id="modal-close-btn">&times;</span>
             <h3 id="modal-title">Welcome</h3>
             <form class="auth-form" id="auth-form" onsubmit="return false;">
-                <input type="email" id="auth-email" placeholder="Email" required>
-                <input type="password" id="auth-password" placeholder="Password (min. 6 characters)" required>
-                <div class="form-buttons">
-                    <button type="button" id="login-action-btn">Log In</button>
-                    <button type="button" id="signup-action-btn">Sign Up</button>
-                </div>
+                <input type="email" id="auth-email" placeholder="Email" required><input type="password" id="auth-password" placeholder="Password (min. 6 characters)" required>
+                <div class="form-buttons"><button type="button" id="login-action-btn">Log In</button><button type="button" id="signup-action-btn">Sign Up</button></div>
                 <p id="auth-error"></p>
             </form>
         </div>
     </div>
 
     <script type="module">
+        // --- SDK IMPORTS ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, increment, collection, query, where, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
+        // --- FIREBASE CONFIG ---
         const firebaseConfig = {
             apiKey: "AIzaSyCkXeTXEZ-VpAAKr5aMY3iTuZCW330aMUQ",
             authDomain: "dream-hive-uk-drill-beats.firebaseapp.com",
@@ -93,63 +62,146 @@
         };
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app); // Initialize Firestore
 
+        // --- STATE MANAGEMENT ---
+        let currentUser = null;
+        let userLikes = new Set(); // Stores beat IDs the user has liked
+
+        // --- AUTH LOGIC ---
         const modal = document.getElementById('auth-modal');
-        const loggedOutView = document.getElementById('logged-out-view');
-        const userStatusView = document.getElementById('user-status');
-        const authError = document.getElementById('auth-error');
-
-        onAuthStateChanged(auth, user => {
+        onAuthStateChanged(auth, async (user) => {
+            currentUser = user;
             if (user) {
                 document.getElementById('user-email').textContent = user.email;
-                userStatusView.style.display = 'flex';
-                loggedOutView.style.display = 'none';
+                document.getElementById('user-status').style.display = 'flex';
+                document.getElementById('logged-out-view').style.display = 'none';
                 modal.style.display = 'none';
+                await fetchUserLikes(); // Fetch likes when user logs in
             } else {
-                userStatusView.style.display = 'none';
-                loggedOutView.style.display = 'flex';
+                document.getElementById('user-status').style.display = 'none';
+                document.getElementById('logged-out-view').style.display = 'flex';
+                userLikes.clear(); // Clear likes on logout
             }
+            loadAndRenderBeats(); // Reload all beats to update like status
         });
-
-        document.getElementById('login-btn').addEventListener('click', () => modal.style.display = 'flex');
-        document.getElementById('signup-btn').addEventListener('click', () => modal.style.display = 'flex');
-        document.getElementById('modal-close-btn').addEventListener('click', () => { modal.style.display = 'none'; authError.style.display = 'none'; });
-        document.getElementById('logout-btn').addEventListener('click', () => signOut(auth));
         
-        const emailInput = document.getElementById('auth-email');
-        const passwordInput = document.getElementById('auth-password');
+        // Auth UI Listeners... (condensed)
+        document.getElementById('login-btn').addEventListener('click',()=>modal.style.display='flex');document.getElementById('signup-btn').addEventListener('click',()=>modal.style.display='flex');document.getElementById('modal-close-btn').addEventListener('click',()=>{modal.style.display='none';document.getElementById('auth-error').style.display='none'});document.getElementById('logout-btn').addEventListener('click',()=>signOut(auth));document.getElementById('signup-action-btn').addEventListener('click',async()=>{try{await createUserWithEmailAndPassword(auth,document.getElementById('auth-email').value,document.getElementById('auth-password').value);document.getElementById('auth-error').style.display='none'}catch(e){document.getElementById('auth-error').textContent=e.message;document.getElementById('auth-error').style.display='block'}});document.getElementById('login-action-btn').addEventListener('click',async()=>{try{await signInWithEmailAndPassword(auth,document.getElementById('auth-email').value,document.getElementById('auth-password').value);document.getElementById('auth-error').style.display='none'}catch(e){document.getElementById('auth-error').textContent=e.code==='auth/invalid-credential'?"In a rush? Sign up first, silly.":e.message;document.getElementById('auth-error').style.display='block'}});
+        
+        async function fetchUserLikes() {
+            if (!currentUser) return;
+            const q = query(collection(db, "likes"), where("userId", "==", currentUser.uid));
+            const querySnapshot = await getDocs(q);
+            userLikes = new Set(querySnapshot.docs.map(doc => doc.data().beatId));
+        }
 
-        document.getElementById('signup-action-btn').addEventListener('click', async () => {
-            try {
-                await createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
-                authError.style.display = 'none';
-            } catch (error) {
-                authError.textContent = error.message;
-                authError.style.display = 'block';
+        // --- LIKES LOGIC ---
+        window.handleLike = async function(beatId) {
+            if (!currentUser) {
+                alert("Please log in to like beats!");
+                return;
             }
-        });
+            
+            const beatRef = doc(db, "beats", beatId);
+            const likeRef = doc(collection(db, "likes")); // New like document
+            const batch = writeBatch(db);
 
-        document.getElementById('login-action-btn').addEventListener('click', async () => {
-            try {
-                await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
-                authError.style.display = 'none';
-            } catch (error) {
-                // --- CHANGE: Added your custom funny error message ---
-                if (error.code === 'auth/invalid-credential') {
-                    authError.textContent = "In a rush? Sign up first, silly.";
-                } else {
-                    authError.textContent = error.message; // Show other errors normally
+            if (userLikes.has(beatId)) {
+                // Future feature: implement unlike logic here if desired
+                console.log("You have already liked this beat.");
+                return;
+            }
+            
+            // 1. Update the beat's like count
+            batch.set(beatRef, { likeCount: increment(1) }, { merge: true });
+            // 2. Record that this user has liked this beat
+            batch.set(likeRef, { userId: currentUser.uid, beatId: beatId });
+
+            await batch.commit();
+
+            // Update UI immediately
+            userLikes.add(beatId);
+            const countElement = document.querySelector(`[data-beat-id='${beatId}'] .like-count`);
+            countElement.textContent = parseInt(countElement.textContent) + 1;
+            document.querySelector(`[data-beat-id='${beatId}'] .like-button`).classList.add('liked');
+        }
+
+        // --- BEAT RENDERING LOGIC ---
+        let currentAudio = null;
+        window.playPreview = function(button, filePath) {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0; // Stop and rewind
+            }
+            if (currentAudio && currentAudio.src.includes(filePath)) {
+                currentAudio = null; // Allows re-clicking to play again
+                button.querySelector('.material-icons').textContent = 'play_circle';
+                return;
+            }
+            currentAudio = new Audio(filePath);
+            currentAudio.play();
+            button.querySelector('.material-icons').textContent = 'pause_circle';
+
+            const thirtySecondStop = setTimeout(() => {
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0;
+                    button.querySelector('.material-icons').textContent = 'play_circle';
                 }
-                authError.style.display = 'block';
-            }
-        });
+            }, 30000); // 30 seconds
 
-        let cA=null,cPB=null;function pP(b,f){const i=b.querySelector('.material-icons');if(cA){const c=cPB.querySelector('.material-icons');if(cPB===b){cA.paused?(cA.play(),i.textContent='pause_circle'):(cA.pause(),i.textContent='play_circle');return}cA.pause();c.textContent='play_circle'}cA=new Audio(f);cA.play();i.textContent='pause_circle';cPB=b;cA.addEventListener('ended',()=>{i.textContent='play_circle';cA=null;cPB=null});cA.addEventListener('error',()=>{alert(`Error: Could not find beat file.\nPath: ${f}`);i.textContent='play_circle'})}
-        function lB(l){l.textContent=parseInt(l.textContent)+1}
-        function cBIH(b){return`<div class="beat-item"><span class="song-name">${b.songName}</span><button class="button"onclick="pP(this,'${b.filePath}')"><i class="material-icons">play_circle</i></button><div class="like-container"><button class="button"onclick="lB(this.nextElementSibling)"><i class="material-icons">favorite</i></button><span class="like-count">0</span></div><button class="button"><i class="material-icons">share</i></button><a href="${b.buyLink||'#'}"target="_blank"class="buy-button">BUY LEASE</a></div>`}
-        function cFBH(b){return`<div class="featured-beat-item"><span class="song-name">${b.songName}</span><button class="button"onclick="pP(this,'${b.filePath}')"><i class="material-icons"style="font-size:48px">play_circle</i></button></div>`}
-        async function laRB(){try{const r=await fetch('beat-list.json?cachebust='+new Date().getTime());if(!r.ok)throw new Error(`HTTP error! status: ${r.status}`);const d=await r.json();document.getElementById('featured-beats-list').innerHTML=d.featuredBeats.slice().reverse().map(cFBH).join('');document.getElementById('all-beats-list').innerHTML=d.allBeats.slice().reverse().map(cBIH).join('')}catch(e){console.error("Could not load beat list:",e);document.getElementById('all-beats-list').innerHTML='<p style="text-align:center;padding:20px;">Could not load beats. If you just pushed an update, wait a moment and refresh.</p>'}}
-        document.addEventListener('DOMContentLoaded',laRB);
+            currentAudio.addEventListener('pause', () => {
+                clearTimeout(thirtySecondStop); // Clear timer if user stops it manually
+                button.querySelector('.material-icons').textContent = 'play_circle';
+            });
+        }
+        
+        function createBeatItemHTML(beat) {
+            const beatId = beat.songName.replace(/\s+/g, '-').toLowerCase(); // Create a unique ID
+            const isLiked = userLikes.has(beatId);
+            return `<div class="beat-item" data-beat-id="${beatId}">
+                        <span class="song-name">${beat.songName}</span>
+                        <button class="button" onclick="playPreview(this, '${beat.filePath}')"><i class="material-icons">play_circle</i></button>
+                        <div class="like-container">
+                            <button class="button like-button ${isLiked ? 'liked' : ''}" onclick="handleLike('${beatId}')"><i class="material-icons">favorite</i></button>
+                            <span class="like-count">${beat.likeCount || 0}</span>
+                        </div>
+                        <button class="button"><i class="material-icons">share</i></button>
+                        <a href="${beat.buyLink || '#'}" target="_blank" class="buy-button">BUY LEASE</a>
+                    </div>`;
+        }
+
+        function createFeaturedBeatHTML(beat) {
+            // Featured beats currently do not have like/share functionality for a cleaner look
+            return `<div class="featured-beat-item">
+                        <span class="song-name">${beat.songName}</span>
+                        <button class="button" onclick="playPreview(this, '${beat.filePath}')"><i class="material-icons" style="font-size:48px">play_circle</i></button>
+                    </div>`;
+        }
+
+        async function loadAndRenderBeats() {
+            try {
+                const response = await fetch('beat-list.json?cachebust=' + new Date().getTime());
+                if (!response.ok) throw new Error(`Could not fetch beat-list.json`);
+                const fileData = await response.json();
+
+                // Fetch like counts from Firestore
+                for (const beat of fileData.allBeats) {
+                    const beatId = beat.songName.replace(/\s+/g, '-').toLowerCase();
+                    const docRef = doc(db, "beats", beatId);
+                    const docSnap = await getDoc(docRef);
+                    beat.likeCount = docSnap.exists() ? docSnap.data().likeCount : 0;
+                }
+                
+                document.getElementById('featured-beats-list').innerHTML = fileData.featuredBeats.slice().reverse().map(createFeaturedBeatHTML).join('');
+                document.getElementById('all-beats-list').innerHTML = fileData.allBeats.slice().reverse().map(createBeatItemHTML).join('');
+            } catch (e) {
+                console.error("Error loading beats:", e);
+                document.getElementById('all-beats-list').innerHTML = '<p style="text-align:center;padding:20px;">Could not load beats. If you just pushed an update, wait a moment and refresh.</p>';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', loadAndRenderBeats);
     </script>
 </body>
 </html>
