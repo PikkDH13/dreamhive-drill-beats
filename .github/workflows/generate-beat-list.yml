@@ -31,25 +31,33 @@ jobs:
           node -e "
             const fs = require('fs');
             const path = require('path');
+            // FIX: Use an absolute path based on the runner's workspace
+            const workspace = process.env.GITHUB_WORKSPACE;
 
             function getFiles(dir) {
-              if (!fs.existsSync(dir)) return [];
-              return fs.readdirSync(dir).filter(file => file.endsWith('.mp3'));
+              const fullDir = path.join(workspace, dir);
+              if (!fs.existsSync(fullDir)) {
+                console.log(`Directory not found: ${fullDir}`);
+                return [];
+              }
+              return fs.readdirSync(fullDir).filter(file => file.endsWith('.mp3'));
             }
 
             const allBeats = getFiles('beats').map(file => ({
-              songName: path.parse(file).name,
+              songName: path.parse(file).name.replace(/[-_]/g, ' '), // Cleans up file names
               filePath: 'beats/' + file,
               buyLink: '#'
             }));
 
             const featuredBeats = getFiles('beats/featured').map(file => ({
-              songName: path.parse(file).name,
+              songName: path.parse(file).name.replace(/[-_]/g, ' '), // Cleans up file names
               filePath: 'beats/featured/' + file
             }));
 
-            const beatList = { allBeats, featuredBeats };
+            console.log(`Found ${allBeats.length} regular beats.`);
+            console.log(`Found ${featuredBeats.length} featured beats.`);
 
+            const beatList = { allBeats, featuredBeats };
             fs.writeFileSync('beat-list.json', JSON.stringify(beatList, null, 2));
             console.log('beat-list.json generated successfully.');
           "
