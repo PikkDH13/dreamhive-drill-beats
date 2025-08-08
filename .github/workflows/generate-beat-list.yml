@@ -31,27 +31,26 @@ jobs:
           node -e "
             const fs = require('fs');
             const path = require('path');
-            // FIX: Use an absolute path based on the runner's workspace
             const workspace = process.env.GITHUB_WORKSPACE;
 
             function getFiles(dir) {
               const fullDir = path.join(workspace, dir);
-              if (!fs.existsSync(fullDir)) {
-                console.log(`Directory not found: ${fullDir}`);
-                return [];
-              }
+              if (!fs.existsSync(fullDir)) { return []; }
               return fs.readdirSync(fullDir).filter(file => file.endsWith('.mp3'));
             }
 
+            // Correct path for 'beats' folder
             const allBeats = getFiles('beats').map(file => ({
-              songName: path.parse(file).name.replace(/[-_]/g, ' '), // Cleans up file names
+              songName: path.parse(file).name.replace(/[-_]/g, ' '),
               filePath: 'beats/' + file,
               buyLink: '#'
             }));
 
-            const featuredBeats = getFiles('beats/featured').map(file => ({
-              songName: path.parse(file).name.replace(/[-_]/g, ' '), // Cleans up file names
-              filePath: 'beats/featured/' + file
+            // --- THIS IS THE FIX ---
+            // Correct path for 'featured' folder
+            const featuredBeats = getFiles('featured').map(file => ({
+              songName: path.parse(file).name.replace(/[-_]/g, ' '),
+              filePath: 'featured/' + file 
             }));
 
             console.log(`Found ${allBeats.length} regular beats.`);
