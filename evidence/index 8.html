@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UK Drill Beats</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* Global "Zoom Out" Effect */
+        html { font-size: 90%; }
+
+        body{margin:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background-color:#121212;color:#e0e0e0}
+        
+        /* Reduced max-width for "zoomed-out" feel */
+        .background-container{width:90%;max-width:1100px;margin:30px auto;background-color:#1e1e1e;background-image:url(images/background.jpg);background-size:cover;background-position:center;border-radius:15px;box-shadow:0 0 20px rgba(0,0,0,.5);padding:20px 40px}
+        
+        .header{display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;border-bottom:1px solid #333}.header h1{color:#e53935;margin:0;font-size:1.8em;text-transform:uppercase;letter-spacing:1px}.login-signup-area a{color:#e0e0e0;text-decoration:none;margin-left:15px;padding:8px 15px;border:1px solid #e53935;border-radius:5px;cursor:pointer;transition:all .3s ease;box-shadow:0 2px 4px rgba(0,0,0,.3)}.login-signup-area a:hover{background-color:#e53935;color:#fff;box-shadow:0 4px 8px rgba(0,0,0,.5)}#user-status{display:none;align-items:center;gap:15px}#user-status span{font-weight:700}h2{color:#e53935;border-bottom:2px solid #e53935;padding-bottom:10px;margin-top:30px}
+        
+        /* Responsive, Centered & Bordered Featured Boxes */
+        .featured-beats-list{min-height:100px;display:flex;gap:20px;padding:15px;flex-wrap:wrap;justify-content:center;}
+        .featured-beat-item{flex-shrink:0;width:220px;background-color:#2c2c2c;padding:15px;border-radius:10px;text-align:center;border:1px solid #e53935;box-shadow: 0 4px 8px rgba(0,0,0,0.4);}
+        
+        .featured-beat-item .song-name{font-weight:700;font-size:1.1em;margin-bottom:10px;display:block}.beat-list{min-height:100px;display:flex;flex-direction:column;gap:15px}.beat-item{display:grid;grid-template-columns:1fr auto auto auto auto;align-items:center;background-color:#2c2c2c;padding:15px;border-radius:10px;transition:background-color .3s}.beat-item:hover{background-color:#383838}.beat-item .song-name{font-size:1.2em;font-weight:700;text-align:left}.beat-item .button,.featured-beat-item .button{background:0 0;border:none;color:#e0e0e0;cursor:pointer;font-size:24px;margin:0 5px;padding:5px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:color .3s}.beat-item .button:hover,.featured-beat-item .button:hover{color:#e53935}.buy-button{background-color:#e53935;color:#fff;padding:8px 20px;border-radius:5px;text-decoration:none;font-weight:700;font-size:16px;margin-left:10px;transition:all .3s ease;box-shadow:0 2px 4px rgba(0,0,0,.3)}.buy-button:hover{background-color:#c42724;transform:translateY(-2px);box-shadow:0 4px 8px rgba(0,0,0,.5)}.like-container{display:flex;align-items:center;gap:5px;min-width:60px}.like-button.liked .material-icons{color:#e53935}.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);justify-content:center;align-items:center;z-index:1000}.modal-content{background:#2c2c2c;padding:30px;border-radius:10px;width:90%;max-width:400px;box-shadow:0 5px 15px rgba(0,0,0,.5);position:relative}.modal-close{position:absolute;top:10px;right:15px;font-size:28px;font-weight:700;color:#fff;cursor:pointer}.modal-content h3{color:#e53935;text-align:center;margin-top:0}.auth-form{display:flex;flex-direction:column;gap:15px}.auth-form input{background:#1e1e1e;border:1px solid #555;border-radius:5px;padding:12px;color:#fff;font-size:16px}.auth-form input:focus{outline:0;border-color:#e53935}.form-buttons{display:flex;gap:10px;justify-content:center;margin-top:10px}.form-buttons button{flex:1;padding:12px;border:none;border-radius:5px;font-size:16px;font-weight:700;cursor:pointer;transition:all .3s ease;box-shadow:0 2px 4px rgba(0,0,0,.3)}.form-buttons button:hover{transform:translateY(-2px);box-shadow:0 4px 8px rgba(0,0,0,.5)}#signup-action-btn{background-color:#e53935;color:#fff}#signup-action-btn:hover{background-color:#c42724}#login-action-btn{background-color:#555;color:#fff}#login-action-btn:hover{background-color:#777}#auth-error{color:#ff8a80;text-align:center;margin-top:15px;font-weight:700;display:none}
+    </style>
+</head>
+<body>
+    <div class="background-container">
+        <header class="header"><h1>UK Drill Beats</h1><div class="login-signup-area"><div id="logged-out-view"><a id="login-btn">Log In</a><a id="signup-btn">Sign Up</a></div><div id="user-status"><span id="user-email"></span><a id="logout-btn">Log Out</a></div></div></header>
+        <main>
+            <section class="featured-beats"><h2>Featured Beats</h2><div class="featured-beats-list" id="featured-beats-list"></div></section>
+            <section class="all-beats"><h2>All Beats</h2><div class="beat-list" id="all-beats-list"></div></section>
+        </main>
+    </div>
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal-content">
+            <span class="modal-close" id="modal-close-btn">&times;</span>
+            <h3 id="modal-title">Welcome</h3>
+            <form class="auth-form" id="auth-form" onsubmit="return false;">
+                <input type="email" id="auth-email" placeholder="Email" required>
+                <input type="password" id="auth-password" placeholder="Password (min. 6 characters)" required>
+                <div class="form-buttons">
+                    <button type="button" id="login-action-btn">Log In</button>
+                    <button type="button" id="signup-action-btn">Sign Up</button>
+                </div>
+                <p id="auth-error"></p>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        // --- SDK IMPORTS ---
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, increment, collection, query, where, getDocs, writeBatch, deleteDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+        // --- FIREBASE CONFIG ---
+        const firebaseConfig = {apiKey:"AIzaSyCkXeTXEZ-VpAAKr5aMY3iTuZCW330aMUQ",authDomain:"dream-hive-uk-drill-beats.firebaseapp.com",projectId:"dream-hive-uk-drill-beats",storageBucket:"dream-hive-uk-drill-beats.appspot.com",messagingSenderId:"817848550593",appId:"1:817848550593:web:7dbadc392729127c8d4040",measurementId:"G-HPKZYPMX3G"};
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // --- STATE & AUTH LOGIC ---
+        let currentUser = null;
+        let userLikes = new Map();
+        onAuthStateChanged(auth, async (user) => {
+            currentUser = user;
+            if (user) {
+                document.getElementById('user-email').textContent = user.email;
+                document.getElementById('user-status').style.display = 'flex';
+                document.getElementById('logged-out-view').style.display = 'none';
+                document.getElementById('auth-modal').style.display = 'none';
+                await fetchUserLikes();
+            } else {
+                document.getElementById('user-status').style.display = 'none';
+                document.getElementById('logged-out-view').style.display = 'flex';
+                userLikes.clear();
+            }
+            loadAndRenderBeats();
+        });
+        
+        async function fetchUserLikes() {
+            if (!currentUser) return;
+            const q = query(collection(db, "likes"), where("userId", "==", currentUser.uid));
+            const querySnapshot = await getDocs(q);
+            userLikes = new Map(querySnapshot.docs.map(doc => [doc.data().beatId, doc.id]));
+        }
+        
+        // --- EVENT HANDLERS (ATTACHED TO WINDOW) ---
+        window.handleLike = async function(beatId) {
+            if (!currentUser) { alert("Please log in to like beats!"); return; }
+            const beatRef = doc(db, "beats", beatId);
+            const batch = writeBatch(db);
+            const hasLiked = userLikes.has(beatId);
+            if (hasLiked) {
+                const likeDocId = userLikes.get(beatId);
+                const likeRef = doc(db, "likes", likeDocId);
+                batch.delete(likeRef);
+                batch.set(beatRef, { likeCount: increment(-1) }, { merge: true });
+                await batch.commit();
+                userLikes.delete(beatId);
+            } else {
+                const likeRef = doc(collection(db, "likes"));
+                batch.set(beatRef, { likeCount: increment(1) }, { merge: true });
+                batch.set(likeRef, { userId: currentUser.uid, beatId: beatId });
+                await batch.commit();
+                userLikes.set(beatId, likeRef.id);
+_            }
+            loadAndRenderBeats();
+        };
+
+        let currentAudio = null;
+        let currentPlayButton = null;
+        let stopTimer = null;
+        window.playPreview = function(button, filePath) {
+            const icon = button.querySelector('.material-icons');
+            if (currentPlayButton === button) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                icon.textContent = 'play_arrow';
+                clearTimeout(stopTimer);
+                currentAudio = null;
+                currentPlayButton = null;
+                return;
+            }
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                currentPlayButton.querySelector('.material-icons').textContent = 'play_arrow';
+                clearTimeout(stopTimer);
+            }
+            currentAudio = new Audio(filePath);
+            currentAudio.play();
+            icon.textContent = 'stop';
+            currentPlayButton = button;
+            stopTimer = setTimeout(() => {
+                if (currentPlayButton === button) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0;
+                    icon.textContent = 'play_arrow';
+                    currentAudio = null;
+                    currentPlayButton = null;
+                }
+            }, 30000);
+            currentAudio.addEventListener('ended', () => {
+                if (currentPlayButton === button) {
+                    icon.textContent = 'play_arrow';
+                    currentPlayButton = null;
+                    clearTimeout(stopTimer);
+                }
+            });
+        };
+        
+        // --- RENDERING LOGIC ---
+        function createBeatItemHTML(beat){const beatId=beat.songName.replace(/\s+/g,'-').toLowerCase();const isLiked=userLikes.has(beatId);return`<div class="beat-item"data-beat-id="${beatId}"><span class="song-name">${beat.songName}</span><button class="button"onclick="playPreview(this,'${beat.filePath}')"><i class="material-icons">play_arrow</i></button><div class="like-container"><button class="button like-button ${isLiked?'liked':''}"onclick="handleLike('${beatId}')"><i class="material-icons">favorite</i></button><span class="like-count">${beat.likeCount||0}</span></div><button class="button"><i class="material-icons">share</i></button><a href="${beat.buyLink||'#'}"target="_blank"class="buy-button">BUY LEASE</a></div>`}
+        function createFeaturedBeatHTML(beat){return`<div class="featured-beat-item"><span class="song-name">${beat.songName}</span><button class="button"onclick="playPreview(this,'${beat.filePath}')"><i class="material-icons"style="font-size:48px">play_arrow</i></button></div>`}
+        
+        async function loadAndRenderBeats() {
+            try {
+                const response = await fetch('beat-list.json?cachebust=' + new Date().getTime());
+                if (!response.ok) throw new Error(`Could not fetch beat-list.json`);
+                const fileData = await response.json();
+                for (const beat of fileData.allBeats) {
+                    const beatId = beat.songName.replace(/\s+/g, '-').toLowerCase();
+                    const docRef = doc(db, "beats", beatId);
+                    const docSnap = await getDoc(docRef);
+                    beat.likeCount = docSnap.exists() ? docSnap.data().likeCount : 0;
+                }
+                document.getElementById('featured-beats-list').innerHTML = fileData.featuredBeats.slice().reverse().map(createFeaturedBeatHTML).join('');
+                document.getElementById('all-beats-list').innerHTML = fileData.allBeats.slice().reverse().map(createBeatItemHTML).join('');
+            } catch (e) {
+                console.error("Error loading beats:", e);
+                document.getElementById('all-beats-list').innerHTML = '<p style="text-align:center;padding:20px;">Could not load beats. Wait a moment and refresh.</p>';
+            }
+        }
+        
+        // --- INITIAL LOAD & AUTH UI LISTENERS (condensed) ---
+        document.addEventListener('DOMContentLoaded', loadAndRenderBeats);
+        const modal = document.getElementById('auth-modal'); document.getElementById('login-btn').addEventListener('click',()=>modal.style.display='flex');document.getElementById('signup-btn').addEventListener('click',()=>modal.style.display='flex');document.getElementById('modal-close-btn').addEventListener('click',()=>{modal.style.display='none';document.getElementById('auth-error').style.display='none'});document.getElementById('signup-action-btn').addEventListener('click',async()=>{try{await createUserWithEmailAndPassword(auth,document.getElementById('auth-email').value,document.getElementById('auth-password').value)}catch(e){document.getElementById('auth-error').textContent=e.message;document.getElementById('auth-error').style.display='block'}});document.getElementById('login-action-btn').addEventListener('click',async()=>{try{await signInWithEmailAndPassword(auth,document.getElementById('auth-email').value,document.getElementById('auth-password').value)}catch(e){document.getElementById('auth-error').textContent=e.code==='auth/invalid-credential'?"In a rush? Sign up first, silly.":e.message;document.getElementById('auth-error').style.display='block'}});
+    </script>
+</body>
+</html>
