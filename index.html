@@ -138,7 +138,7 @@
             document.getElementById('signup-btn').addEventListener('click',()=>modal.style.display='flex');
             document.getElementById('modal-close-btn').addEventListener('click',()=>{modal.style.display='none'; authError.style.display='none';});
             document.getElementById('logout-btn').addEventListener('click', () => signOut(auth));
-_            document.getElementById('signup-action-btn').addEventListener('click',async()=>{try{await createUserWithEmailAndPassword(auth,emailInput.value,passwordInput.value)}catch(e){authError.textContent=e.message;authError.style.display='block'}});
+            document.getElementById('signup-action-btn').addEventListener('click',async()=>{try{await createUserWithEmailAndPassword(auth,emailInput.value,passwordInput.value)}catch(e){authError.textContent=e.message;authError.style.display='block'}});
             document.getElementById('login-action-btn').addEventListener('click',async()=>{try{await signInWithEmailAndPassword(auth,emailInput.value,passwordInput.value)}catch(e){authError.textContent=e.code==='auth/invalid-credential'?"In a rush? Sign up first, silly.":e.message;authError.style.display='block'}});
             
             const handleInteraction = (e, listData) => {
