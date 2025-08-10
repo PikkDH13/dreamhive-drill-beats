@@ -71,3 +71,7 @@ node_modules/
 # Ignore local env files
 functions/.env*
 .env*
+
+# Ignore local env files
+functions/.env*
+.env*
