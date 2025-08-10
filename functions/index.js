@@ -21,7 +21,7 @@ exports.createCheckoutSession = onCall(
     const stripe = require("stripe")(stripeSecret.value());
 
     const { beatId, leaseType, priceInCents, songName } = request.data;
-    const siteUrl = "https://pikkdh13.github.io"; // change later if needed
+    const siteUrl = "https://pikkdh13.github.io/dreamhive-drill-beats"; // change later if needed
 
     try {
       const session = await stripe.checkout.sessions.create({
