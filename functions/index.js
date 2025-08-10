@@ -87,7 +87,7 @@ exports.getDownloadLink = onCall({secrets: [stripeSecret]}, async (request) => {
         throw new HttpsError("permission-denied", "User mismatch.");
     }
 
-    const bucket = storage.bucket("dream-hive-uk-drill-beats.appspot.com");
+    const bucket = storage.bucket("europe-west2-dream-hive-uk-drill-beats.appspot.com");
     const filePath = `deliverables/${beatId}/${leaseType}.zip`;
     const file = bucket.file(filePath);
 
