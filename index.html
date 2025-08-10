@@ -26,7 +26,7 @@
         import { getFirestore, doc, getDoc, setDoc, increment, collection, query, where, getDocs, writeBatch, deleteDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
         
         const firebaseConfig={apiKey:"AIzaSyCkXeTXEZ-VpAAKr5aMY3iTuZCW330aMUQ",authDomain:"dream-hive-uk-drill-beats.firebaseapp.com",projectId:"dream-hive-uk-drill-beats",storageBucket:"dream-hive-uk-drill-beats.appspot.com",messagingSenderId:"817848550593",appId:"1:817848550593:web:7dbadc392729127c8d4040",measurementId:"G-HPKZYPMX3G"};
-        const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),functions=getFunctions(app);
+        const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),functions=getFunctions(app, "europe-west2");
         
         const stripe = Stripe('pk_test_51RuPZaKFsCfdVtBloTNPta1Euq6vw1MAo9TvrOC7FR9BkDYPCEa8BGT3Lqn3XdffJh2DAWAFl9ejPsb3zDEKe1Z9005HShNpEY'); // <-- PASTE YOUR KEY HERE
 
