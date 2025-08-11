@@ -1,8 +1,8 @@
-name: Generate Beat List and Deploy to Pages
+name: Generate Beat List and Deploy Pages
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main"] # This is the magic that makes it automatic
   workflow_dispatch:
 
 permissions:
@@ -15,63 +15,31 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
       - name: Generate beat list
         run: |
           node -e "
             const fs = require('fs');
             const path = require('path');
             const workspace = process.env.GITHUB_WORKSPACE;
-
             function getFiles(dir) {
               const fullDir = path.join(workspace, dir);
               if (!fs.existsSync(fullDir)) { return []; }
               return fs.readdirSync(fullDir).filter(file => file.endsWith('.mp3'));
             }
-
-            // Correct path for 'beats' folder
-            const allBeats = getFiles('beats').map(file => ({
-              songName: path.parse(file).name.replace(/[-_]/g, ' '),
-              filePath: 'beats/' + file,
-              buyLink: '#'
-            }));
-
-            // --- THIS IS THE FIX ---
-            // Correct path for 'featured' folder
-            const featuredBeats = getFiles('featured').map(file => ({
-              songName: path.parse(file).name.replace(/[-_]/g, ' '),
-              filePath: 'featured/' + file 
-            }));
-
-            console.log(`Found ${allBeats.length} regular beats.`);
-            console.log(`Found ${featuredBeats.length} featured beats.`);
-
+            const allBeats = getFiles('beats').map(file => ({ songName: path.parse(file).name.replace(/[-_]/g, ' '), filePath: 'beats/' + file }));
+            const featuredBeats = getFiles('featured').map(file => ({ songName: path.parse(file).name.replace(/[-_]/g, ' '), filePath: 'featured/' + file }));
             const beatList = { allBeats, featuredBeats };
             fs.writeFileSync('beat-list.json', JSON.stringify(beatList, null, 2));
-            console.log('beat-list.json generated successfully.');
           "
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
