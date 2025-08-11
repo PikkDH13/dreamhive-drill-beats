@@ -15,9 +15,16 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # This single job does everything now
   build-and-deploy:
     runs-on: ubuntu-latest
+    
+    # --- THIS IS THE FIX ---
+    # We are officially assigning this job to the deployment environment.
+    # This is the "job title" the security guard was looking for.
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,29 +35,22 @@ jobs:
             const fs = require('fs');
             const path = require('path');
             const workspace = process.env.GITHUB_WORKSPACE;
-
             function getFiles(dir) {
               const fullDir = path.join(workspace, dir);
               if (!fs.existsSync(fullDir)) { return []; }
               return fs.readdirSync(fullDir).filter(file => file.endsWith('.mp3'));
             }
-
             const allBeats = getFiles('beats').map(file => ({ songName: path.parse(file).name.replace(/[-_]/g, ' '), filePath: 'beats/' + file }));
             const featuredBeats = getFiles('featured').map(file => ({ songName: path.parse(file).name.replace(/[-_]/g, ' '), filePath: 'featured/' + file }));
-
             const beatList = { allBeats, featuredBeats };
             fs.writeFileSync('beat-list.json', JSON.stringify(beatList, null, 2));
-            console.log('Beat list generated successfully.');
           "
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
       
-      # This is the part that was missing
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        # This is the 'environment' badge it needs
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # The old, incorrect 'env:' block has been removed from here.
