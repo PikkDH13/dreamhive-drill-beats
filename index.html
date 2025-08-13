@@ -51,7 +51,7 @@
         
         const firebaseConfig={apiKey:"AIzaSyCkXeTXEZ-VpAAKr5aMY3iTuZCW330aMUQ",authDomain:"dream-hive-uk-drill-beats.firebaseapp.com",projectId:"dream-hive-uk-drill-beats",storageBucket:"dream-hive-uk-drill-beats.appspot.com",messagingSenderId:"817848550593",appId:"1:817848550593:web:7dbadc392729127c8d4040",measurementId:"G-HPKZYPMX3G"};
         const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),functions=getFunctions(app, "europe-west2");
-        const stripe = Stripe('pk_test_51RuPZaKFsCfdVtBloTNPta1Euq6vw1MAo9TvrOC7FR9BkDYPCEa8BGT3Lqn3XdffJh2DAWAFl9ejPsb3zDEKe1Z9005HShNpEY');
+        const stripe = Stripe('pk_live_51RuPZUGyqAmgk6UpPtu7LLA5beoFIYboPeHYAEGVmp1gQHacdV3Dvf7xslexTm2l7UeBurm2rNR4UQNpM8YL07Uv00yW06dLTd');
         let currentUser=null,userLikes=new Map(),allBeatsData=[],featuredBeatsData=[],currentAudio=null,currentPlayButton=null,stopTimer=null;
         const leaseModal=document.getElementById("lease-modal"),shareModal=document.getElementById("share-modal");
         
