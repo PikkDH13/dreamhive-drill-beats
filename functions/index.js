@@ -6,7 +6,7 @@ const {defineSecret} = require("firebase-functions/params");
 const admin = require("firebase-admin");
 const {Storage} = require("@google-cloud/storage");
 
-setGlobalOptions({region: "europe-west2"});
+setGlobalOptions({region: "us-central1"});
 admin.initializeApp();
 const storage = new Storage();
 
