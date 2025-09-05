@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GhostTextManager">
+    <option name="inputs">
+      <map>
+        <entry key="apply fix please">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1757084243820" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="payment works at the end but the upon download (last step), it qwont provide the file, can you see whats wrong?">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1757084091130" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
